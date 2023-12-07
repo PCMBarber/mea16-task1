@@ -17,8 +17,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                docker build -t stratcastor/flask-jenk .
-                docker build -t stratcastor/nginx-jenk ./nginx
+                docker build -t stratcastor/flask-jenk:latest -t stratcastor/flask-jenk:v${BUILD_NUMBER} .
+                docker build -t stratcastor/nginx-jenk:latest -t stratcastor/nginx-jenk:v${BUILD_NUMBER} ./nginx
                 '''
             }
         }
@@ -26,8 +26,10 @@ pipeline {
         stage('Push') {
             steps {
                 sh '''
-                docker push stratcastor/flask-jenk 
-                docker push stratcastor/nginx-jenk
+                docker push stratcastor/flask-jenk:latest
+                docker push stratcastor/flask-jenk:v${BUILD_NUMBER}
+                docker push stratcastor/nginx-jenk:latest
+                docker push stratcastor/nginx-jenk:v${BUILD_NUMBER}
                 '''
             }
         }
