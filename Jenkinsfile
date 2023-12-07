@@ -17,8 +17,17 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
-                docker build -t flask-jenk .
-                docker build -t nginx-jenk ./nginx
+                docker build -t stratcastor/flask-jenk .
+                docker build -t stratcastor/nginx-jenk ./nginx
+                '''
+            }
+        }
+
+        stage('Push') {
+            steps {
+                sh '''
+                docker push stratcastor/flask-jenk 
+                docker push stratcastor/nginx-jenk
                 '''
             }
         }
@@ -26,8 +35,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                docker run -d --name flask-app --network jenk-network flask-jenk
-                docker run -d -p 80:80 --name nginx --network jenk-network nginx-jenk
+                docker run -d --name flask-app --network jenk-network stratcastor/flask-jenk
+                docker run -d -p 80:80 --name nginx --network jenk-network stratcastor/nginx-jenk
                 '''
             }
         }
