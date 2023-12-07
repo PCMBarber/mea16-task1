@@ -36,7 +36,7 @@ pipeline {
             steps {
 
                 sh '''
-                echo "Not needed for now"
+                docker system prune -f 
                 '''
 
             }
