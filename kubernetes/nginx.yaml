@@ -14,25 +14,38 @@ data:
       }
     }
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: nginx
+  name: nginx-deployment
   labels:
     app: nginx
 spec:
-  volumes:
-  - name: nginx-volume
-    configMap:
-      name: nginx-config
-  containers:
-  - name: nginx
-    image: nginx:latest
-    ports: 
-    - containerPort: 80
-    volumeMounts:
-    - name: nginx-volume
-      mountPath: /etc/nginx/
+  replicas: 10
+  selector:
+    matchLabels:
+      app: nginx
+  strategy:
+    rollingUpdate:
+      maxSurge: 10%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      volumes:
+      - name: nginx-volume
+        configMap:
+          name: nginx-config
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports: 
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-volume
+          mountPath: /etc/nginx/
 ---
 apiVersion: v1
 kind: Service
