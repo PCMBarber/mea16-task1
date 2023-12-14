@@ -7,7 +7,7 @@ COPY . .
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 # Set YOUR_NAME environment variable
-ENV YOUR_NAME="Michael & Destiny"
+ENV YOUR_NAME="Chris"
 # Expose the correct port
 EXPOSE 5500
 # Create an entrypoint
