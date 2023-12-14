@@ -20,7 +20,8 @@ spec:
     spec:
       containers:
       - name: task1
-        image: stratcastor/task1kube
+        image: stratcastor/flask-jenk
+        imagePullPolicy: Always
         ports: 
         - containerPort: 5500
 ---
