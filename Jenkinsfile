@@ -23,8 +23,8 @@ pipeline {
             steps {
                 sh '''
                 kubectl apply -f ./kubernetes
+                kubectl set image deployment/flask-deployment flask-deployment=stratcastor/flask-jenk:v${BUILD_NUMBER}
                 kubectl rollout restart deployment flask-deployment
-                kubectl rollout restart deployment nginx-deployment
                 '''
             }
         }
